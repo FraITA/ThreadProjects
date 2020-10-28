@@ -1,0 +1,74 @@
+﻿Lista classi progetto thread non sincronizzati
+
+
+
+
+Classe Auto:
+
+    Deriva dalla classe Thread e attraverso il metodo run() permette la simulazione di un’auto che corre.
+        
+    Gli attributi vMin e vMax servono per determinare la velocità massima e minima dell’auto in termini di millisecondi.
+        
+    L’attributo priorita serve per definire quale auto avrà la priorità sulle altre (dato che sono thread), nel caso ci siano casi eccezionali come quello di un incidente, dove davanti deve starci sempre la safety car.
+    
+    metodo run():
+        -Aumenta la dist percorsa per ogni secondo
+        -Controlla se c’è un vincitore, e se c’è, si ferma, inoltre comunica il vincitore.
+
+Classe AutoSostituto:
+    Questa classe è quasi in tutto e per tutto simile alla classe Auto, con la sola differenza che implementa l’interfaccia Runnable invece che estendere la classe thread, dato che, implementando l’interfaccia Automobile è uguale alla classe Auto agli occhi delle altre classi.
+
+
+Classe SafetyCar:
+    Derivante dalla classe Auto, la SafetyCar viene istanziata quando avviene un incidente e avrà la priorità massima tra le auto, oltre ad una velocità bassa.
+
+
+Classe Pilota:
+    Questa classe viene istanziata per ogni auto nella gara e tiene conto dei giri e della distanza percorsa da esso, dato che l’importante per la gara è quanti chilometri ha fatto il pilota, non         l’auto.
+    Il metodo addDistPercorsa(int dist) serve per aggiungere la distanza percorsa ad ogni secondo.
+
+
+
+
+
+
+Classe Tracciato:
+        Questa classe serve per gestire tutta la gara, gestendo gli incidenti e la vittoria della gara, oltre a contenere i dati della gara stessa.
+        
+        Attributi:
+                lunghezza: lunghezza del tracciato.
+
+
+                nGiri: Numero di giri necessari da fare per poter vincere la gara.
+
+
+                auto: ArrayList che contiene tutte le auto che sono nella gara.
+
+
+                garaFinita: Segna quando la gara è finita, cioè quando un pilota ha vinto.
+
+
+                InizioGara: segna il tempo in cui è iniziata la gara, così da poter sapere quanto è durata in totale.
+                    vincitore: attributo che segna il vincitore della gara.
+        
+        Metodi:
+
+
+            setTracciato(int lunghezza, int nGiri): metodo che setta gli attributi essenziali per far iniziare la gara.
+
+            iniziaGara(): Questo metodo chiama il metodo run() di tutte le auto, dando il via alla gara.
+                
+            vittoria(Pilota pilota): Avvisa tutti, compresi i partecipanti, chi è il pilota vincitore non appena termina la gara.
+                
+            incidente(): gestisce l’evento dell’incidente, mandando il pilota che ha subito l’incidente a prendere l’auto in sostituzione e facendo rallentare per un tot di tempo tutti i partecipanti mediante l’utilizzo di una safety car.
+
+
+            fineGara(): Quando termina la gara, questo metodo gestisce i thread (auto) ancora in running interrompendoli.
+        
+
+
+
+
+Interfaccia Automobile:
+    interfaccia usata per rendere comunemente utilizzabili le tre classi Auto,AutoSostituto e SafetyCar dalla stessa variabile,
+    potendo chiamare anche gli stesso metodi, tra cui i getter, setter e anche il metodo run().
