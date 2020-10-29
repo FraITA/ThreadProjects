@@ -20,6 +20,7 @@ Classe Auto:
 
 
 Classe AutoSostituto:
+
     Questa classe è quasi in tutto e per tutto simile alla classe Auto, con la 
     sola differenza che implementa l’interfaccia Runnable invece che estendere 
     la classe thread, dato che, implementando l’interfaccia Automobile è uguale 
@@ -27,11 +28,13 @@ Classe AutoSostituto:
 
 
 Classe SafetyCar:
+
     Derivante dalla classe Auto, la SafetyCar viene istanziata quando avviene un 
     incidente e avrà la priorità massima tra le auto, oltre ad una velocità bassa.
 
 
 Classe Pilota:
+
     Questa classe viene istanziata per ogni auto nella gara e tiene conto dei giri 
     e della distanza percorsa da esso, dato che l’importante per la gara è quanti 
     chilometri ha fatto il pilota, non l’auto.
@@ -40,6 +43,7 @@ Classe Pilota:
 
 
 Classe Tracciato:
+
     Questa classe serve per gestire tutta la gara, gestendo gli incidenti e 
     la vittoria della gara, oltre a contenere i dati della gara stessa.
         
@@ -76,5 +80,6 @@ Classe Tracciato:
         
 
 Interfaccia Automobile:
+
     interfaccia usata per rendere comunemente utilizzabili le tre classi Auto,AutoSostituto e SafetyCar dalla stessa variabile,
     potendo chiamare anche gli stesso metodi, tra cui i getter, setter e anche il metodo run().
