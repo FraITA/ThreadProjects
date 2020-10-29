@@ -24,51 +24,51 @@ public class AutoSostituto implements Automobile, Runnable {
 
     @Override
     public String getScuderia() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void setScuderia(String scuderia) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return scuderia;
     }
 
     @Override
     public Pilota getPilota() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void setPilota(Pilota pilota) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return pilota;
     }
 
     @Override
     public int getVMin() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void setVMin(int vMin) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return vMin;
     }
 
     @Override
     public int getVMax() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void setVMax(int vMax) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return vMax;
     }
 
     @Override
     public int getPriorita() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return priorita;
+    }
+
+    @Override
+    public void setScuderia(String scuderia) {
+        this.scuderia = scuderia;
+    }
+
+    @Override
+    public void setPilota(Pilota pilota) {
+        this.pilota = pilota;
+    }
+
+    @Override
+    public void setVMin(int vMin) {
+        this.vMin = vMin;
+    }
+
+    @Override
+    public void setVMax(int vMax) {
+        this.vMax = vMax;
     }
 
     @Override
     public void setPriorita(int priorita) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        this.priorita = priorita;
     }
 }

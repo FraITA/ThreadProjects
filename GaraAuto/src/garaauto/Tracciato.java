@@ -19,8 +19,8 @@ public class Tracciato {
     public static void iniziaGara() {
     }
 
-    public static Automobile addAuto(Automobile auto) {
-        throw new UnsupportedOperationException("Not supported yet.");
+    public static boolean addAuto(Automobile auto) {
+        return Tracciato.auto.add(auto);
     }
 
     public static void vittoria(Pilota pilota) {
