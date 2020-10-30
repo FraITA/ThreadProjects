@@ -6,10 +6,6 @@ public class SafetyCar extends Auto {
         super(scuderia, pilota, vMin, vMax, priorita);
     }
 
-    public SafetyCar(String scuderia) {
-        super(scuderia);
-    }
-
     @Override
     public void run() {
     }

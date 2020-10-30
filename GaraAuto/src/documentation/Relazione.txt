@@ -81,5 +81,5 @@ Classe Tracciato:
 
 Interfaccia Automobile:
 
-    interfaccia usata per rendere comunemente utilizzabili le tre classi Auto,AutoSostituto e SafetyCar dalla stessa variabile,
+    interfaccia usata per rendere comunemente utilizzabili le tre classi Auto, AutoSostituto e SafetyCar dalla stessa variabile,
     potendo chiamare anche gli stesso metodi, tra cui i getter, setter e anche il metodo run().

@@ -1,5 +1,8 @@
 package garaauto;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 public class Auto extends Thread implements Automobile {
 
     private String scuderia;
@@ -10,16 +13,27 @@ public class Auto extends Thread implements Automobile {
 
     private int vMax;
 
-    private int priorita;
-
     public Auto(String scuderia, Pilota pilota, int vMin, int vMax, int priorita) {
-    }
-
-    public Auto(String scuderia) {
+        super(scuderia);
+        setPriority(priorita);
+        this.scuderia = scuderia;
+        this.pilota = pilota;
+        this.vMin = vMin;
+        this.vMax = vMax;
     }
 
     @Override
     public void run() {
+        while(true){
+            try {
+                int distanza = (int) (Math.random() * (vMax-vMin) + vMin);
+                System.out.println("Distanza percorsa da" + this.scuderia +" : " + distanza + "mt");
+                this.pilota.addDistPercorsa(distanza);
+                sleep(1000);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(Auto.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
     }
 
     @Override
@@ -43,11 +57,6 @@ public class Auto extends Thread implements Automobile {
     }
 
     @Override
-    public int getPriorita() {
-        return priorita;
-    }
-
-    @Override
     public void setScuderia(String scuderia) {
         this.scuderia = scuderia;
     }
@@ -65,11 +74,6 @@ public class Auto extends Thread implements Automobile {
     @Override
     public void setVMax(int vMax) {
         this.vMax = vMax;
-    }
-
-    @Override
-    public void setPriorita(int priorita) {
-        this.priorita = priorita;
     }
     
 }

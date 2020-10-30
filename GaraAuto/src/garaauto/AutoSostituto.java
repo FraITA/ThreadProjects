@@ -15,9 +15,6 @@ public class AutoSostituto implements Automobile, Runnable {
     public AutoSostituto(String scuderia, Pilota pilota, int vMin, int vMax, int priorita) {
     }
 
-    public AutoSostituto(String scuderia) {
-    }
-
     @Override
     public void run() {
     }
@@ -43,11 +40,6 @@ public class AutoSostituto implements Automobile, Runnable {
     }
 
     @Override
-    public int getPriorita() {
-        return priorita;
-    }
-
-    @Override
     public void setScuderia(String scuderia) {
         this.scuderia = scuderia;
     }
@@ -65,10 +57,5 @@ public class AutoSostituto implements Automobile, Runnable {
     @Override
     public void setVMax(int vMax) {
         this.vMax = vMax;
-    }
-
-    @Override
-    public void setPriorita(int priorita) {
-        this.priorita = priorita;
     }
 }

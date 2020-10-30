@@ -11,7 +11,7 @@ public class Pilota {
     private int giriFatti;
 
     public Pilota(String nome) {
-
+        this.nome = nome;
     }
 
     public void addDistPercorsa(int dist) {

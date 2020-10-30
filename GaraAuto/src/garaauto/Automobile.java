@@ -2,8 +2,6 @@ package garaauto;
 
 public interface Automobile {
 
-    public void run();
-
     public String getScuderia();
 
     public void setScuderia(String scuderia);
@@ -19,8 +17,4 @@ public interface Automobile {
     public int getVMax();
 
     public void setVMax(int vMax);
-
-    public int getPriorita();
-
-    public void setPriorita(int priorita);
 }

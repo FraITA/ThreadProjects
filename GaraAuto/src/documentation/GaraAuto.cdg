@@ -18,9 +18,6 @@
           <Argument type="in" name="vMax"/>
           <Argument type="int" name="priorita"/>
         </Constructor>
-        <Constructor visibility="public">
-          <Argument type="String" name="scuderia"/>
-        </Constructor>
       </Constructors>
       <Methods>
         <Method name="run" returnType="void" visibility="public"/>
@@ -48,7 +45,7 @@
       <Fields>
         <Field name="lunghezza" type="int" visibility="public" isStatic="true"/>
         <Field name="nGiri" type="int" visibility="public" isStatic="true"/>
-        <Field name="auto" type="ArrayList&lt;Automobile&gt;" visibility="public" isStatic="true"/>
+        <Field name="auto" type="ArrayList&lt;Thread&gt;" visibility="public" isStatic="true"/>
         <Field name="garaFinita" type="boolean" visibility="public" isStatic="true"/>
         <Field name="inizioGara" type="int" visibility="public" isStatic="true"/>
         <Field name="vincitore" type="Pilota" visibility="public" isStatic="true"/>
@@ -57,7 +54,7 @@
       <Methods>
         <Method name="iniziaGara" returnType="void" visibility="public" isStatic="true"/>
         <Method name="addAuto" returnType="boolean" visibility="public" isStatic="true">
-          <Argument type="Automobile" name="auto"/>
+          <Argument type="Thread" name="auto"/>
         </Method>
         <Method name="vittoria" returnType="void" visibility="public" isStatic="true">
           <Argument type="Pilota" name="pilota"/>
@@ -85,9 +82,6 @@
           <Argument type="int" name="vMin"/>
           <Argument type="int" name="vMax"/>
           <Argument type="int" name="priorita"/>
-        </Constructor>
-        <Constructor visibility="public">
-          <Argument type="String" name="scuderia"/>
         </Constructor>
       </Constructors>
       <Methods>
@@ -147,7 +141,6 @@
     </Interface>
     <Interface name="Automobile" package="" visibility="public" xPosition="664.0" yPosition="697.0">
       <Methods>
-        <Method name="run" returnType="void" visibility="public"/>
         <Method name="getScuderia" returnType="String" visibility="public"/>
         <Method name="setScuderia" returnType="void" visibility="public">
           <Argument type="String" name="scuderia"/>
@@ -172,16 +165,16 @@
     </Interface>
   </ClassDiagramComponents>
   <ClassDiagramRelations>
-    <IsRelation name="is" source="Auto" target="Thread"/>
+    <HasRelation name="Has" source="AutoSostituto" target="Pilota" type="Composition" sourceCardinality="0..1" targetCardinality="1..1"/>
     <HasRelation name="Has" source="Tracciato" target="Automobile" type="Aggregation" sourceCardinality="0..1" targetCardinality="0..*" collectionType="List"/>
-    <ImplementsRelation name="&lt;&lt;implements&gt;&gt;" source="AutoSostituto" target="Runnable"/>
-    <ImplementsRelation name="&lt;&lt;implements&gt;&gt;" source="Auto" target="Automobile"/>
+    <IsRelation name="is" source="Auto" target="Thread"/>
+    <IsRelation name="is" source="Thread" target="Object"/>
     <HasRelation name="Has" source="Auto" target="Pilota" type="Composition" sourceCardinality="0..1" targetCardinality="1..1"/>
+    <ImplementsRelation name="&lt;&lt;implements&gt;&gt;" source="Auto" target="Automobile"/>
+    <ImplementsRelation name="&lt;&lt;implements&gt;&gt;" source="AutoSostituto" target="Automobile"/>
+    <ImplementsRelation name="&lt;&lt;implements&gt;&gt;" source="Thread" target="Runnable"/>
+    <ImplementsRelation name="&lt;&lt;implements&gt;&gt;" source="AutoSostituto" target="Runnable"/>
     <HasRelation name="Has" source="Pilota" target="Automobile" type="Composition" sourceCardinality="0..1" targetCardinality="1..1"/>
     <IsRelation name="is" source="SafetyCar" target="Auto"/>
-    <ImplementsRelation name="&lt;&lt;implements&gt;&gt;" source="AutoSostituto" target="Automobile"/>
-    <HasRelation name="Has" source="AutoSostituto" target="Pilota" type="Composition" sourceCardinality="0..1" targetCardinality="1..1"/>
-    <IsRelation name="is" source="Thread" target="Object"/>
-    <ImplementsRelation name="&lt;&lt;implements&gt;&gt;" source="Thread" target="Runnable"/>
   </ClassDiagramRelations>
 </ClassDiagram>
