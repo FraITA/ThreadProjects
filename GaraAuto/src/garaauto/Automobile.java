@@ -1,7 +1,7 @@
 package garaauto;
 
-public interface Automobile {
-
+public interface Automobile extends Runnable{
+    
     public String getScuderia();
 
     public void setScuderia(String scuderia);
@@ -17,4 +17,8 @@ public interface Automobile {
     public int getVMax();
 
     public void setVMax(int vMax);
+    
+    public boolean isInGara();
+    
+    public void setInGara(boolean inGara);
 }

@@ -1,25 +1,24 @@
 package garaauto;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 public class Auto extends Thread implements Automobile {
 
-    private String scuderia;
+    protected String scuderia;
 
-    private Pilota pilota;
+    protected Pilota pilota;
 
-    private int vMin;
+    protected int vMin;
 
-    private int vMax;
+    protected int vMax;
+    
+    protected boolean inGara;
 
-    public Auto(String scuderia, Pilota pilota, int vMin, int vMax, int priorita) {
+    public Auto(String scuderia, Pilota pilota, int vMin, int vMax) {
         super(scuderia);
-        setPriority(priorita);
         this.scuderia = scuderia;
         this.pilota = pilota;
         this.vMin = vMin;
         this.vMax = vMax;
+        this.inGara = true;
     }
 
     @Override
@@ -27,11 +26,11 @@ public class Auto extends Thread implements Automobile {
         while(true){
             try {
                 int distanza = (int) (Math.random() * (vMax-vMin) + vMin);
-                System.out.println("Distanza percorsa da" + this.scuderia +" : " + distanza + "mt");
                 this.pilota.addDistPercorsa(distanza);
+                System.out.println("Distanza percorsa da " + this.scuderia +" : " + this.pilota.getDistPercorsa() + "mt");
                 sleep(1000);
             } catch (InterruptedException ex) {
-                Logger.getLogger(Auto.class.getName()).log(Level.SEVERE, null, ex);
+                System.out.println("Thread interrotto");
             }
         }
     }
@@ -57,6 +56,11 @@ public class Auto extends Thread implements Automobile {
     }
 
     @Override
+    public boolean isInGara() {
+        return inGara;
+    }
+    
+    @Override
     public void setScuderia(String scuderia) {
         this.scuderia = scuderia;
     }
@@ -75,6 +79,13 @@ public class Auto extends Thread implements Automobile {
     public void setVMax(int vMax) {
         this.vMax = vMax;
     }
+
+    @Override
+    public void setInGara(boolean inGara) {
+        this.inGara = inGara;
+    }
+    
+    
     
 }
     

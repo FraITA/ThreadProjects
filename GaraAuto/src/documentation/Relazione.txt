@@ -55,7 +55,11 @@ Classe Tracciato:
         nGiri: Numero di giri necessari da fare per poter vincere la gara.
 
 
-        auto: ArrayList che contiene tutte le auto che sono nella gara.
+        mapAuto: HashMap che contiene tutti gli oggetti che implementano l'interfaccia Automobile, ognuno etichettato 
+            con il relativo nomedella scuderia.
+
+        mapthread: HashMap che contiene tutti i Thread che fanno riferimento alle auto sul tracciato, usa la stessa
+            organizzazione dei dati di mapAuto
 
 
         garaFinita: Segna quando la gara è finita, cioè quando un pilota ha vinto.

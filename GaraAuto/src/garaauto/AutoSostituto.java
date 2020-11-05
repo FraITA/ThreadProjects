@@ -1,6 +1,7 @@
 package garaauto;
 
-public class AutoSostituto implements Automobile, Runnable {
+
+public class AutoSostituto implements Automobile {
 
     private String scuderia;
 
@@ -11,12 +12,29 @@ public class AutoSostituto implements Automobile, Runnable {
     private int vMax;
 
     private int priorita;
+    
+    private boolean inGara;
 
-    public AutoSostituto(String scuderia, Pilota pilota, int vMin, int vMax, int priorita) {
+    public AutoSostituto(String scuderia, Pilota pilota, int vMin, int vMax) {
+        this.scuderia = scuderia;
+        this.pilota = pilota;
+        this.vMin = vMin;
+        this.vMax = vMax;
+        this.inGara = true;
     }
 
     @Override
     public void run() {
+        while(true){
+            try {
+                int distanza = (int) (Math.random() * (vMax-vMin) + vMin);
+                this.pilota.addDistPercorsa(distanza);
+                System.out.println("Distanza percorsa da " + this.scuderia +" : " + this.pilota.getDistPercorsa() + "mt");
+                Thread.sleep(1000);
+            } catch (InterruptedException ex) {
+                System.out.println("Thread interrotto");
+            }
+        }
     }
 
     @Override
@@ -40,6 +58,11 @@ public class AutoSostituto implements Automobile, Runnable {
     }
 
     @Override
+    public boolean isInGara() {
+        return inGara;
+    }
+
+    @Override
     public void setScuderia(String scuderia) {
         this.scuderia = scuderia;
     }
@@ -58,4 +81,11 @@ public class AutoSostituto implements Automobile, Runnable {
     public void setVMax(int vMax) {
         this.vMax = vMax;
     }
+
+    @Override
+    public void setInGara(boolean inGara) {
+        this.inGara = inGara;
+    }
+    
+    
 }

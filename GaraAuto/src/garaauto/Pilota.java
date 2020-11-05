@@ -15,8 +15,6 @@ public class Pilota {
     }
 
     public void addDistPercorsa(int dist) {
-        int giri = 0;
-
         this.distPercorsa += dist;
         
         this.giriFatti = Math.floorDiv(Tracciato.lunghezza, this.distPercorsa);
@@ -50,4 +48,9 @@ public class Pilota {
         this.giriFatti = giriFatti;
     }
 
+    public void setDistPercorsa(int distPercorsa) {
+        this.distPercorsa = distPercorsa;
+    }
+
+    
 }
