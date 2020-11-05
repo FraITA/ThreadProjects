@@ -60,7 +60,7 @@
         <Method name="vittoria" returnType="void" visibility="public" isStatic="true">
           <Argument type="Pilota" name="pilota"/>
         </Method>
-        <Method name="incidente" returnType="void" visibility="public" isStatic="true"/>
+        <Method name="incidente" returnType="void" visibility="private" isStatic="true"/>
         <Method name="fineGara" returnType="void" visibility="public" isStatic="true"/>
         <Method name="setTracciato" returnType="void" visibility="public" isStatic="true">
           <Argument type="int" name="lunghezza"/>
