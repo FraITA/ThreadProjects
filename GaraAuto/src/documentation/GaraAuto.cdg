@@ -42,14 +42,14 @@
     </Class>
     <Class name="Tracciato" package="" visibility="public" xPosition="1054.0" yPosition="635.0">
       <Fields>
-        <Field name="lunghezza" type="int" visibility="protected" isStatic="true"/>
-        <Field name="nGiri" type="int" visibility="protected" isStatic="true"/>
-        <Field name="mapThread" type="HashMap&lt;Thread&gt;" visibility="protected" isStatic="true"/>
-        <Field name="garaFinita" type="boolean" visibility="protected" isStatic="true"/>
+        <Field name="lunghezza" type="int" visibility="private" isStatic="true"/>
+        <Field name="nGiri" type="int" visibility="private" isStatic="true"/>
+        <Field name="mapThread" type="HashMap&lt;Thread&gt;" visibility="private" isStatic="true"/>
+        <Field name="garaFinita" type="boolean" visibility="private" isStatic="true"/>
         <Field name="inizioGara" type="int" visibility="private" isStatic="true"/>
-        <Field name="vincitore" type="Pilota" visibility="protected" isStatic="true"/>
+        <Field name="vincitore" type="Pilota" visibility="private" isStatic="true"/>
         <Field name="isSet" type="boolean" visibility="private" isStatic="true"/>
-        <Field name="mapAuto" type="HashMap&lt;Automobile&gt;" visibility="protected" isStatic="true"/>
+        <Field name="mapAuto" type="HashMap&lt;Automobile&gt;" visibility="private" isStatic="true"/>
       </Fields>
       <Constructors/>
       <Methods>

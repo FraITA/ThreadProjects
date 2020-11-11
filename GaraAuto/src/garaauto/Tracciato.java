@@ -1,36 +1,75 @@
 package garaauto;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * Classe che imita un tracciato automobilistico.
+ * @author FraITA
+ */
 public class Tracciato {
 
-    protected static int lunghezza;
+    /**
+     * Lunghezza del tracciato.
+     */
+    private static int lunghezza;
 
-    protected static int nGiri;
+    /**
+     * Numero di giri totali da compiere per vincere la gara.
+     */
+    private static int nGiri;
 
-    protected static HashMap<String, Thread> mapThread;
+    /**
+     * HashMap che contiene tutti i Thread che sono le automobili in corsa.
+     */
+    private static HashMap<String, Thread> mapThread;
     
-    protected static HashMap<String, Automobile> mapAuto;
+    /**
+     * HashMap che contiene tutte le auto e tutti i loro dati.
+     */
+    private static HashMap<String, Automobile> mapAuto;
 
-    protected static boolean garaFinita;
-
+    /**
+     * Tempo di inizio della gara.
+     */
     private static int inizioGara;
 
-    protected static Pilota vincitore;
+    /**
+     * Pilota vincitore della gara.
+     */
+    private static Pilota vincitore;
     
+    /**
+     * Variabile booleana che segna se il tracciato è stato settato.
+     */
     private static boolean isSet = false;
+    
+    /**
+     * ArrayList dei piloti ordinati secondo l'arrivo.
+     */
+    private static ArrayList<Pilota> classifica;
+    
+    /**
+     * Numero di auto totali che stanno sul tracciato.
+     */
+    private static int nAuto;
 
+    /**
+     * Metodo che da l'inizio alla gara e attente un tot di tempo per
+     * l'incidente.
+     */
     public static void iniziaGara() {
-        if(!isSet){
-            System.out.println("tracciato non settato!");
-            return;
-        }
         int tempoIncidente;
         int tMax = 60;
         int tMin = 10;
+        
+        if(!isSet){
+            System.out.println("Tracciato non settato!");
+            return;
+        }
         
         if(mapAuto.isEmpty()){
             System.out.println("Auto non aggiunte!");
@@ -49,8 +88,10 @@ public class Tracciato {
         } catch (InterruptedException ex) {
             System.out.println("Thread interrotto");
         }
-
-        incidente();
+        
+        if(!mapThread.isEmpty()){
+            incidente();
+        }
 
     }
 
@@ -60,15 +101,41 @@ public class Tracciato {
         if(auto instanceof Auto){
             Tracciato.mapThread.put(auto.getScuderia(), (Thread) auto);
         }else if(auto instanceof AutoSostituto){
-            Tracciato.mapThread.put(auto.getScuderia(), new Thread(auto));
+            Tracciato.mapThread.put(auto.getScuderia(), new Thread(auto, auto.getScuderia()));
         }
+        
+        nAuto = mapAuto.size();
         
         return true;
     }
 
-    public static void vittoria(Pilota pilota) {
+    /**
+     * Metodo che segna il vincitore e mette tutti i piloti che 
+     * finiscono in una classifica.
+     * @param pilota pilota che ha finito la gara.
+     */
+    protected static void fineGara(Pilota pilota) {
+        if(Tracciato.vincitore == null){
+            Tracciato.vincitore = pilota;
+            System.out.println("\nAbbiamo un vincitore! \n");
+        }
+        classifica.add(pilota);
+        mapAuto.remove(pilota.getAuto().getScuderia());
+        mapThread.remove(pilota.getAuto().getScuderia());
+        
+        if(classifica.size() == nAuto){
+            System.out.println("Classifica:\n");
+            for(Pilota p : classifica){
+                System.out.println("Posto " + (classifica.indexOf(p)+1) + " : " + p.getNome());
+            }
+        }
     }
 
+    /**
+     * Metodo che mette in atto un incidente, scegliendo qual è l'auto
+     * che subisce l'incidente, rallenta le auto in gara e gestisce la
+     * safety car.
+     */
     private static void incidente() {
         Random generatore = new Random();
         
@@ -78,7 +145,7 @@ public class Tracciato {
         
         Automobile auto = (Automobile) mapAuto.get(key);
         
-        AutoSostituto autoS = new AutoSostituto("Scuderia sostituta", auto.getPilota(), 50, 100);
+        AutoSostituto autoS = new AutoSostituto("Scuderia sostitutiva", auto.getPilota(), 25, 50);
         
         System.out.println("\n" + auto.getPilota().getNome() + " ha subito un incidente!\n");
         
@@ -88,6 +155,7 @@ public class Tracciato {
         
         mapAuto.remove(auto.getScuderia());
         mapThread.remove(auto.getScuderia());
+        auto.setInGara(false);
         
         mapThread.get(autoS.getScuderia()).start();
         
@@ -97,8 +165,9 @@ public class Tracciato {
             mapAuto.get(k).setVMax(50);
         }
         
-        addAuto(new SafetyCar("Safety Car", new Pilota("Pilota safety car"), 50, 75));
+        addAuto(new SafetyCar("Safety Car", new Pilota("Pilota safety car"), 50, 55));
         
+        mapThread.get("Safety Car").setPriority(10);
         
         int max = 0;
         for(String k : mapAuto.keySet()){
@@ -128,15 +197,33 @@ public class Tracciato {
         }
     }
 
-    public static void fineGara() {
-    }
-
+    /**
+     * Metodo che prepara il tracciato.
+     * @param lunghezza lunghezza del tracciato.
+     * @param nGiri numero di giri per vincere la gara.
+     */
     public static void setTracciato(int lunghezza, int nGiri) {
         Tracciato.isSet = true;
         Tracciato.mapAuto = new HashMap<>();
         Tracciato.mapThread = new HashMap<>();
+        Tracciato.vincitore = null;
+        Tracciato.classifica = new ArrayList<>();
         
         Tracciato.lunghezza = lunghezza;
         Tracciato.nGiri = nGiri;
     }
+
+    public static Pilota getVincitore() {
+        return vincitore;
+    }
+
+    public static int getLunghezza() {
+        return lunghezza;
+    }
+
+    public static int getnGiri() {
+        return nGiri;
+    }
+    
+    
 }

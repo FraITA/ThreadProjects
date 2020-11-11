@@ -1,5 +1,10 @@
 package garaauto;
 
+/**
+ * Interfaccia usata per riconoscere le classi che simulano auto e 
+ * poterne usare i loro metodi comuni
+ * @author user
+ */
 public interface Automobile extends Runnable{
     
     public String getScuderia();

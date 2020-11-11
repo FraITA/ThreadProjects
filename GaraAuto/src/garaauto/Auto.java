@@ -1,17 +1,44 @@
 package garaauto;
 
+/**
+ * Classe che simula un'auro, con le sue caratteristiche e la possibilità
+ * di poter correre.
+ * @author FraITA
+ */
 public class Auto extends Thread implements Automobile {
 
+    /**
+     * Scuderia dell'auto.
+     */
     protected String scuderia;
 
+    /**
+     * Pilota che guida l'auto.
+     */
     protected Pilota pilota;
 
+    /**
+     * Numero di metri minimi che può percorrere al secondo.
+     */
     protected int vMin;
 
+    /**
+     * Numero di metri massimi che può percorrere al secondo.
+     */
     protected int vMax;
     
+    /**
+     * Variabile booleana che segna se l'auto è ancora in gara.
+     */
     protected boolean inGara;
 
+    /**
+     * Metodo che costruisce l'oggetto Auto
+     * @param scuderia scuderia dell'auto
+     * @param pilota pilota che guida l'auto
+     * @param vMin velocità minima in mt/s
+     * @param vMax velocità minima in mt/s
+     */
     public Auto(String scuderia, Pilota pilota, int vMin, int vMax) {
         super(scuderia);
         this.scuderia = scuderia;
@@ -21,13 +48,29 @@ public class Auto extends Thread implements Automobile {
         this.inGara = true;
     }
 
+    /**
+     * Metodo che permette la simulazione della corsa dell'auto
+     */
     @Override
     public void run() {
-        while(true){
+        this.pilota.setAuto(this);
+        while(this.inGara){
             try {
                 int distanza = (int) (Math.random() * (vMax-vMin) + vMin);
                 this.pilota.addDistPercorsa(distanza);
                 System.out.println("Distanza percorsa da " + this.scuderia +" : " + this.pilota.getDistPercorsa() + "mt");
+                
+                if(Tracciato.getVincitore() != null){
+                    System.out.println(this.pilota.getNome() + ": " + Tracciato.getVincitore().getNome() + " ha vinto!\n");
+                }
+                
+                if(this.pilota.getGiriFatti() == Tracciato.getnGiri()){
+                    Tracciato.fineGara(this.pilota);
+                    if(Tracciato.getVincitore() == null){
+                        System.out.println(this.pilota.getNome() + ": Ho vinto!\n");
+                    }
+                    this.inGara = false;
+                }
                 sleep(1000);
             } catch (InterruptedException ex) {
                 System.out.println("Thread interrotto");

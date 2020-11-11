@@ -15,7 +15,7 @@ public class GaraAuto {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        Tracciato.setTracciato(4000, 10);
+        Tracciato.setTracciato(1000, 3);
         
         Tracciato.addAuto(new Auto("Scuderia 1", new Pilota("Pilota 1"), 100, 150));
         Tracciato.addAuto(new Auto("Scuderia 2", new Pilota("Pilota 2"), 100, 150));
