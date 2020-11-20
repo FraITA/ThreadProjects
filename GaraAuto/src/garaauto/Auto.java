@@ -31,6 +31,8 @@ public class Auto extends Thread implements Automobile {
      * Variabile booleana che segna se l'auto è ancora in gara.
      */
     protected boolean inGara;
+    
+    protected final Tracciato tracciato;
 
     /**
      * Metodo che costruisce l'oggetto Auto
@@ -38,14 +40,16 @@ public class Auto extends Thread implements Automobile {
      * @param pilota pilota che guida l'auto
      * @param vMin velocità minima in mt/s
      * @param vMax velocità minima in mt/s
+     * @param tracciato tracciato in cui corre
      */
-    public Auto(String scuderia, Pilota pilota, int vMin, int vMax) {
+    public Auto(String scuderia, Pilota pilota, int vMin, int vMax, Tracciato tracciato) {
         super(scuderia);
         this.scuderia = scuderia;
         this.pilota = pilota;
         this.vMin = vMin;
         this.vMax = vMax;
         this.inGara = true;
+        this.tracciato = tracciato;
     }
 
     /**
@@ -53,6 +57,7 @@ public class Auto extends Thread implements Automobile {
      */
     @Override
     public void run() {
+		boolean flag = true;
         this.pilota.setAuto(this);
         while(this.inGara){
             try {
@@ -60,16 +65,24 @@ public class Auto extends Thread implements Automobile {
                 this.pilota.addDistPercorsa(distanza);
                 System.out.println("Distanza percorsa da " + this.scuderia +" : " + this.pilota.getDistPercorsa() + "mt");
                 
-                if(Tracciato.getVincitore() != null){
-                    System.out.println(this.pilota.getNome() + ": " + Tracciato.getVincitore().getNome() + " ha vinto!\n");
-                }
-                
-                if(this.pilota.getGiriFatti() == Tracciato.getnGiri()){
-                    Tracciato.fineGara(this.pilota);
-                    if(Tracciato.getVincitore() == null){
-                        System.out.println(this.pilota.getNome() + ": Ho vinto!\n");
+                synchronized(tracciato){
+                    
+                    if(tracciato.getVincitore() != null && flag){
+						System.out.println(this.pilota.getNome() + ": " + tracciato.getVincitore().getNome() + " ha vinto!\n");
+						flag = false;
+					}
+                    
+                    if(this.pilota.getGiriFatti() == tracciato.getnGiri()){
+                        if(tracciato.getVincitore() == null){
+                            System.out.println(this.pilota.getNome() + ": Ho vinto!\n");
+                        }else{
+                            System.out.println(this.pilota.getNome() + ": Ho finito\n");
+                        }
+                        tracciato.fineGara(this.pilota);
+                        this.inGara = false;
                     }
-                    this.inGara = false;
+                
+                
                 }
                 sleep(1000);
             } catch (InterruptedException ex) {
@@ -128,6 +141,10 @@ public class Auto extends Thread implements Automobile {
         this.inGara = inGara;
     }
     
+    @Override
+    public Tracciato getTracciato(){
+        return this.tracciato;
+    }
     
     
 }

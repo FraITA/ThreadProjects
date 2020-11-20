@@ -54,6 +54,7 @@ Classe Tracciato:
 
         nGiri: Numero di giri necessari da fare per poter vincere la gara.
 
+		nAuto: numero di auto in gara in quel momento.
 
         mapAuto: HashMap che contiene tutti gli oggetti che implementano l'interfaccia Automobile, ognuno etichettato 
             con il relativo nomedella scuderia.
@@ -70,9 +71,6 @@ Classe Tracciato:
         
     Metodi:
 
-
-        setTracciato(int lunghezza, int nGiri): metodo che setta gli attributi essenziali per far iniziare la gara.
-
         iniziaGara(): Questo metodo chiama il metodo run() di tutte le auto, dando il via alla gara.
                 
         vittoria(Pilota pilota): Avvisa tutti, compresi i partecipanti, chi è il pilota vincitore non appena termina la gara.
@@ -81,6 +79,7 @@ Classe Tracciato:
 
 
         fineGara(): Quando termina la gara, questo metodo gestisce i thread (auto) ancora in running interrompendoli.
+			Il metodo è sincronizzato con il thread che lo chiama, permettendo il giusto ordine nella classifica.
         
 
 Interfaccia Automobile:

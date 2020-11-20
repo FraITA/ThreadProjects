@@ -38,7 +38,7 @@ public class Pilota {
     public void addDistPercorsa(int dist) {
         this.distPercorsa += dist;
         
-        this.giriFatti = Math.floorDiv(this.distPercorsa, Tracciato.getLunghezza());
+        this.giriFatti = Math.floorDiv(this.distPercorsa, auto.getTracciato().getLunghezza());
     }
 
     public String getNome() {

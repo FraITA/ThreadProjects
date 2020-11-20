@@ -11,76 +11,81 @@ import java.util.logging.Logger;
  * @author FraITA
  */
 public class Tracciato {
-
+    
     /**
      * Lunghezza del tracciato.
      */
-    private static int lunghezza;
+    private int lunghezza;
 
     /**
      * Numero di giri totali da compiere per vincere la gara.
      */
-    private static int nGiri;
+    private int nGiri;
 
     /**
      * HashMap che contiene tutti i Thread che sono le automobili in corsa.
      */
-    private static HashMap<String, Thread> mapThread;
+    private HashMap<String, Thread> mapThread;
     
     /**
      * HashMap che contiene tutte le auto e tutti i loro dati.
      */
-    private static HashMap<String, Automobile> mapAuto;
+    private HashMap<String, Automobile> mapAuto;
 
     /**
      * Tempo di inizio della gara.
      */
-    private static int inizioGara;
+    private int inizioGara;
 
     /**
      * Pilota vincitore della gara.
      */
-    private static Pilota vincitore;
-    
-    /**
-     * Variabile booleana che segna se il tracciato è stato settato.
-     */
-    private static boolean isSet = false;
+    private Pilota vincitore;
     
     /**
      * ArrayList dei piloti ordinati secondo l'arrivo.
      */
-    private static ArrayList<Pilota> classifica;
+    private ArrayList<Pilota> classifica;
     
     /**
      * Numero di auto totali che stanno sul tracciato.
      */
-    private static int nAuto;
+    private int nAuto;
 
+    /**
+     * Metodo che prepara il tracciato.
+     * @param lunghezza lunghezza del tracciato.
+     * @param nGiri numero di giri per vincere la gara.
+     */
+    public Tracciato(int lunghezza, int nGiri) {
+        this.mapAuto = new HashMap<>();
+        this.mapThread = new HashMap<>();
+        this.vincitore = null;
+        this.classifica = new ArrayList<>();
+        
+        this.lunghezza = lunghezza;
+        this.nGiri = nGiri;
+    }
+    
     /**
      * Metodo che da l'inizio alla gara e attente un tot di tempo per
      * l'incidente.
      */
-    public static void iniziaGara() {
+    public void iniziaGara() {
         int tempoIncidente;
-        int tMax = 60;
+        int tMax = 20;
         int tMin = 10;
-        
-        if(!isSet){
-            System.out.println("Tracciato non settato!");
-            return;
-        }
         
         if(mapAuto.isEmpty()){
             System.out.println("Auto non aggiunte!");
             return;
         }
         
-        for (String key : Tracciato.mapThread.keySet()) {
+        for (String key : this.mapThread.keySet()) {
             mapThread.get(key).start();
         }
 
-        Tracciato.inizioGara = (int) System.currentTimeMillis();
+        this.inizioGara = (int) System.currentTimeMillis();
 
         tempoIncidente = (int) (Math.random() * (tMax - tMin) + tMin);
         try {
@@ -95,16 +100,18 @@ public class Tracciato {
 
     }
 
-    public static boolean addAuto(Automobile auto) {
-        Tracciato.mapAuto.put(auto.getScuderia(), auto);
+    public boolean addAuto(Automobile auto) {
+        this.mapAuto.put(auto.getScuderia(), auto);
         
         if(auto instanceof Auto){
-            Tracciato.mapThread.put(auto.getScuderia(), (Thread) auto);
+            this.mapThread.put(auto.getScuderia(), (Thread) auto);
         }else if(auto instanceof AutoSostituto){
-            Tracciato.mapThread.put(auto.getScuderia(), new Thread(auto, auto.getScuderia()));
+            this.mapThread.put(auto.getScuderia(), new Thread(auto, auto.getScuderia()));
         }
         
-        nAuto = mapAuto.size();
+		if(auto instanceof Auto && !(auto instanceof SafetyCar)){
+			nAuto = mapAuto.size();
+		}
         
         return true;
     }
@@ -114,9 +121,9 @@ public class Tracciato {
      * finiscono in una classifica.
      * @param pilota pilota che ha finito la gara.
      */
-    protected static void fineGara(Pilota pilota) {
-        if(Tracciato.vincitore == null){
-            Tracciato.vincitore = pilota;
+    public synchronized void fineGara(Pilota pilota) {
+        if(this.vincitore == null){
+            this.vincitore = pilota;
             System.out.println("\nAbbiamo un vincitore! \n");
         }
         classifica.add(pilota);
@@ -136,7 +143,7 @@ public class Tracciato {
      * che subisce l'incidente, rallenta le auto in gara e gestisce la
      * safety car.
      */
-    private static void incidente() {
+    private  void incidente() {
         Random generatore = new Random();
         
         Object[] array = mapAuto.keySet().toArray();
@@ -145,7 +152,7 @@ public class Tracciato {
         
         Automobile auto = (Automobile) mapAuto.get(key);
         
-        AutoSostituto autoS = new AutoSostituto("Scuderia sostitutiva", auto.getPilota(), 25, 50);
+        AutoSostituto autoS = new AutoSostituto("Scuderia sostitutiva", auto.getPilota(), 25, 50, this);
         
         System.out.println("\n" + auto.getPilota().getNome() + " ha subito un incidente!\n");
         
@@ -165,7 +172,7 @@ public class Tracciato {
             mapAuto.get(k).setVMax(50);
         }
         
-        addAuto(new SafetyCar("Safety Car", new Pilota("Pilota safety car"), 50, 55));
+        addAuto(new SafetyCar("Safety Car", new Pilota("Pilota safety car"), 50, 55, this));
         
         mapThread.get("Safety Car").setPriority(10);
         
@@ -197,31 +204,15 @@ public class Tracciato {
         }
     }
 
-    /**
-     * Metodo che prepara il tracciato.
-     * @param lunghezza lunghezza del tracciato.
-     * @param nGiri numero di giri per vincere la gara.
-     */
-    public static void setTracciato(int lunghezza, int nGiri) {
-        Tracciato.isSet = true;
-        Tracciato.mapAuto = new HashMap<>();
-        Tracciato.mapThread = new HashMap<>();
-        Tracciato.vincitore = null;
-        Tracciato.classifica = new ArrayList<>();
-        
-        Tracciato.lunghezza = lunghezza;
-        Tracciato.nGiri = nGiri;
-    }
-
-    public static Pilota getVincitore() {
+    public Pilota getVincitore() {
         return vincitore;
     }
 
-    public static int getLunghezza() {
+    public int getLunghezza() {
         return lunghezza;
     }
 
-    public static int getnGiri() {
+    public int getnGiri() {
         return nGiri;
     }
     

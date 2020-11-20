@@ -2,12 +2,13 @@ package garaauto;
 
 public class SafetyCar extends Auto {
 
-    public SafetyCar(String scuderia, Pilota pilota, int vMin, int vMax) {
-        super(scuderia, pilota, vMin, vMax);
+    public SafetyCar(String scuderia, Pilota pilota, int vMin, int vMax, Tracciato tracciato) {
+        super(scuderia, pilota, vMin, vMax, tracciato);
     }
 
     @Override
     public void run() {
+        pilota.setAuto(this);
 
         for (int i = 0; i < 30; ++i) {
             try {
@@ -17,7 +18,7 @@ public class SafetyCar extends Auto {
                 sleep(1000);
                 i++;
             } catch (InterruptedException ex) {
-                System.out.println("Thread interrotto");
+                ex.printStackTrace(System.err);
             }
         }
     }

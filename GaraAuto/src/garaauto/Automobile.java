@@ -26,4 +26,6 @@ public interface Automobile extends Runnable{
     public boolean isInGara();
     
     public void setInGara(boolean inGara);
+    
+    public Tracciato getTracciato();
 }
