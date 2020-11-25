@@ -17,6 +17,7 @@ Classe Auto:
     metodo run():
         -Aumenta la dist percorsa per ogni secondo.
         -Controlla se c’è un vincitore e lo comunica.
+		-Quando termina la gara, avvisa il tracciato e termina.
 
 
 Classe AutoSostituto:
@@ -57,25 +58,29 @@ Classe Tracciato:
 		nAuto: numero di auto in gara in quel momento.
 
         mapAuto: HashMap che contiene tutti gli oggetti che implementano l'interfaccia Automobile, ognuno etichettato 
-            con il relativo nomedella scuderia.
+            con il relativo nome della scuderia.
 
         mapthread: HashMap che contiene tutti i Thread che fanno riferimento alle auto sul tracciato, usa la stessa
             organizzazione dei dati di mapAuto
 
 
-        garaFinita: Segna quando la gara è finita, cioè quando un pilota ha vinto.
+        vincitore: attributo che contiene il pilota che ha vinto la gara.
 
 
-        InizioGara: segna il tempo in cui è iniziata la gara, così da poter sapere quanto è durata in totale.
+        inizioGara: segna il tempo in cui è iniziata la gara, così da poter sapere quanto è durata in totale.
             vincitore: attributo che segna il vincitore della gara.
         
     Metodi:
 
-        iniziaGara(): Questo metodo chiama il metodo run() di tutte le auto, dando il via alla gara.
+        iniziaGara(): Questo metodo chiama il metodo run() di tutte le auto, dando il via alla gara, oltre
+			a dar via all'incidente e iniziare il cronometro.
                 
         vittoria(Pilota pilota): Avvisa tutti, compresi i partecipanti, chi è il pilota vincitore non appena termina la gara.
+			Inoltre stila una classifica a fine gara.
                 
-        incidente(): gestisce l’evento dell’incidente, mandando il pilota che ha subito l’incidente a prendere l’auto in sostituzione e facendo rallentare per un tot di tempo tutti i partecipanti mediante l’utilizzo di una safety car.
+        incidente(): gestisce l’evento dell’incidente, mandando il pilota che ha
+			 subito l’incidente a prendere l’auto in sostituzione e facendo rallentare 
+			per un tot di tempo tutti i partecipanti mediante l’utilizzo di una safety car.
 
 
         fineGara(): Quando termina la gara, questo metodo gestisce i thread (auto) ancora in running interrompendoli.

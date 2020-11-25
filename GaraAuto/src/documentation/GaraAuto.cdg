@@ -9,6 +9,7 @@
         <Field name="vMin" type="int" visibility="protected"/>
         <Field name="vMax" type="int" visibility="protected"/>
         <Field name="inGara" type="boolean" visibility="protected"/>
+        <Field name="tracciato" type="Tracciato" visibility="protected" isFinal="true"/>
       </Fields>
       <Constructors>
         <Constructor visibility="public">
@@ -42,30 +43,30 @@
     </Class>
     <Class name="Tracciato" package="" visibility="public" xPosition="1054.0" yPosition="635.0">
       <Fields>
-        <Field name="lunghezza" type="int" visibility="private" isStatic="true"/>
-        <Field name="nGiri" type="int" visibility="private" isStatic="true"/>
-        <Field name="mapThread" type="HashMap&lt;Thread&gt;" visibility="private" isStatic="true"/>
-        <Field name="garaFinita" type="boolean" visibility="private" isStatic="true"/>
-        <Field name="inizioGara" type="int" visibility="private" isStatic="true"/>
-        <Field name="vincitore" type="Pilota" visibility="private" isStatic="true"/>
-        <Field name="isSet" type="boolean" visibility="private" isStatic="true"/>
-        <Field name="mapAuto" type="HashMap&lt;Automobile&gt;" visibility="private" isStatic="true"/>
+        <Field name="lunghezza" type="int" visibility="private"/>
+        <Field name="nGiri" type="int" visibility="private"/>
+        <Field name="mapThread" type="HashMap&lt;Thread&gt;" visibility="private"/>
+        <Field name="inizioGara" type="int" visibility="private"/>
+        <Field name="vincitore" type="Pilota" visibility="private"/>
+        <Field name="mapAuto" type="HashMap&lt;Automobile&gt;" visibility="private"/>
+        <Field name="classifica" type="ArrayList&lt;Pilota&gt;" visibility="private"/>
+        <Field name="nAuto" type="int" visibility="private"/>
       </Fields>
-      <Constructors/>
-      <Methods>
-        <Method name="iniziaGara" returnType="void" visibility="public" isStatic="true"/>
-        <Method name="addAuto" returnType="boolean" visibility="public" isStatic="true">
-          <Argument type="Automobile" name="auto"/>
-        </Method>
-        <Method name="vittoria" returnType="void" visibility="public" isStatic="true">
-          <Argument type="Pilota" name="pilota"/>
-        </Method>
-        <Method name="incidente" returnType="void" visibility="private" isStatic="true"/>
-        <Method name="fineGara" returnType="void" visibility="public" isStatic="true"/>
-        <Method name="setTracciato" returnType="void" visibility="public" isStatic="true">
+      <Constructors>
+        <Constructor visibility="public">
           <Argument type="int" name="lunghezza"/>
           <Argument type="int" name="nGiri"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="iniziaGara" returnType="void" visibility="public"/>
+        <Method name="addAuto" returnType="boolean" visibility="public">
+          <Argument type="Automobile" name="auto"/>
         </Method>
+        <Method name="vittoria" returnType="void" visibility="public">
+          <Argument type="Pilota" name="pilota"/>
+        </Method>
+        <Method name="incidente" returnType="void" visibility="private"/>
       </Methods>
     </Class>
     <Class name="AutoSostituto" package="" visibility="public" xPosition="44.0" yPosition="322.0">
@@ -75,6 +76,7 @@
         <Field name="vMin" type="int" visibility="private"/>
         <Field name="vMax" type="int" visibility="private"/>
         <Field name="inGara" type="boolean" visibility="private"/>
+        <Field name="tracciato" type="Tracciato" visibility="private"/>
       </Fields>
       <Constructors>
         <Constructor visibility="public">
@@ -161,20 +163,21 @@
         <Method name="setInGara" returnType="void" visibility="public">
           <Argument type="boolean" name="inGara"/>
         </Method>
+        <Method name="getTracciato" returnType="Tracciato" visibility="public"/>
       </Methods>
     </Interface>
   </ClassDiagramComponents>
   <ClassDiagramRelations>
+    <IsRelation name="is" source="Thread" target="Object"/>
     <HasRelation name="Has" source="Auto" target="Pilota" type="Composition" sourceCardinality="0..1" targetCardinality="1..1"/>
-    <HasRelation name="Has" source="AutoSostituto" target="Pilota" type="Composition" sourceCardinality="0..1" targetCardinality="1..1"/>
-    <IsRelation name="is" source="Auto" target="Thread"/>
     <IsRelation name="is" source="SafetyCar" target="Auto"/>
     <HasRelation name="Has" source="Pilota" target="Automobile" type="Composition" sourceCardinality="0..1" targetCardinality="1..1"/>
-    <ImplementsRelation name="&lt;&lt;implements&gt;&gt;" source="AutoSostituto" target="Automobile"/>
-    <ImplementsRelation name="&lt;&lt;implements&gt;&gt;" source="Thread" target="Runnable"/>
     <HasRelation name="Has" source="Tracciato" target="Automobile" type="Aggregation" sourceCardinality="0..1" targetCardinality="0..*" collectionType="List"/>
     <ImplementsRelation name="&lt;&lt;implements&gt;&gt;" source="Auto" target="Automobile"/>
-    <IsRelation name="is" source="Thread" target="Object"/>
+    <ImplementsRelation name="&lt;&lt;implements&gt;&gt;" source="AutoSostituto" target="Automobile"/>
     <IsRelation name="is" source="Automobile" target="Runnable"/>
+    <HasRelation name="Has" source="AutoSostituto" target="Pilota" type="Composition" sourceCardinality="0..1" targetCardinality="1..1"/>
+    <IsRelation name="is" source="Auto" target="Thread"/>
+    <ImplementsRelation name="&lt;&lt;implements&gt;&gt;" source="Thread" target="Runnable"/>
   </ClassDiagramRelations>
 </ClassDiagram>
