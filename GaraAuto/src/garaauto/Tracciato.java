@@ -15,22 +15,22 @@ public class Tracciato {
     /**
      * Lunghezza del tracciato.
      */
-    private int lunghezza;
+    private final int lunghezza;
 
     /**
      * Numero di giri totali da compiere per vincere la gara.
      */
-    private int nGiri;
+    private final int nGiri;
 
     /**
      * HashMap che contiene tutti i Thread che sono le automobili in corsa.
      */
-    private HashMap<String, Thread> mapThread;
+    private final HashMap<String, Thread> mapThread;
     
     /**
      * HashMap che contiene tutte le auto e tutti i loro dati.
      */
-    private HashMap<String, Automobile> mapAuto;
+    private final HashMap<String, Automobile> mapAuto;
 
     /**
      * Tempo di inizio della gara.
@@ -45,7 +45,7 @@ public class Tracciato {
     /**
      * ArrayList dei piloti ordinati secondo l'arrivo.
      */
-    private ArrayList<Pilota> classifica;
+    private final ArrayList<Pilota> classifica;
     
     /**
      * Numero di auto totali che stanno sul tracciato.
