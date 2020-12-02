@@ -3,8 +3,6 @@ package garaauto;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * Classe che imita un tracciato automobilistico.
@@ -62,7 +60,7 @@ public class Tracciato {
         this.mapThread = new HashMap<>();
         this.vincitore = null;
         this.classifica = new ArrayList<>();
-        
+		
         this.lunghezza = lunghezza;
         this.nGiri = nGiri;
     }
@@ -100,6 +98,11 @@ public class Tracciato {
 
     }
 
+	/**
+	 * Metodo che permette l'aggiunta di un automobile in entrambe le HashMap.
+	 * @param auto oggetto che estende l'interfaccia Automobile.
+	 * @return vero se è stato inserito, altrimenti falso.
+	 */
     public boolean addAuto(Automobile auto) {
         this.mapAuto.put(auto.getScuderia(), auto);
         
@@ -135,6 +138,7 @@ public class Tracciato {
             for(Pilota p : classifica){
                 System.out.println("Posto " + (classifica.indexOf(p)+1) + " : " + p.getNome());
             }
+			System.out.println("Tempo totale gara: " + (((int)System.currentTimeMillis() - inizioGara)/1000) + " secondi");
         }
     }
 
@@ -189,7 +193,7 @@ public class Tracciato {
         try {
             mapThread.get("Safety Car").join();
         } catch (InterruptedException ex) {
-            Logger.getLogger(Tracciato.class.getName()).log(Level.SEVERE, null, ex);
+            ex.printStackTrace();
         }
         
         mapAuto.remove("Safety Car");
@@ -204,6 +208,16 @@ public class Tracciato {
         }
     }
 
+	public boolean truccaGara(String nomeScuderia){
+		Automobile auto = mapAuto.get(nomeScuderia);
+		if(auto == null){
+			return false;
+		}
+		auto.setVMin(200);
+		auto.setVMax(300);
+		return true;
+	}
+	
     public Pilota getVincitore() {
         return vincitore;
     }

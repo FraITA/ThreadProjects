@@ -67,6 +67,9 @@
           <Argument type="Pilota" name="pilota"/>
         </Method>
         <Method name="incidente" returnType="void" visibility="private"/>
+        <Method name="truccaGara" returnType="boolean" visibility="public">
+          <Argument type="String" name="nomeScuderia"/>
+        </Method>
       </Methods>
     </Class>
     <Class name="AutoSostituto" package="" visibility="public" xPosition="44.0" yPosition="322.0">
@@ -169,15 +172,15 @@
   </ClassDiagramComponents>
   <ClassDiagramRelations>
     <IsRelation name="is" source="Thread" target="Object"/>
-    <HasRelation name="Has" source="Auto" target="Pilota" type="Composition" sourceCardinality="0..1" targetCardinality="1..1"/>
+    <ImplementsRelation name="&lt;&lt;implements&gt;&gt;" source="AutoSostituto" target="Automobile"/>
+    <ImplementsRelation name="&lt;&lt;implements&gt;&gt;" source="Auto" target="Automobile"/>
+    <IsRelation name="is" source="Auto" target="Thread"/>
+    <HasRelation name="Has" source="Tracciato" target="Automobile" type="Aggregation" sourceCardinality="0..1" targetCardinality="0..*" collectionType="List"/>
     <IsRelation name="is" source="SafetyCar" target="Auto"/>
     <HasRelation name="Has" source="Pilota" target="Automobile" type="Composition" sourceCardinality="0..1" targetCardinality="1..1"/>
-    <HasRelation name="Has" source="Tracciato" target="Automobile" type="Aggregation" sourceCardinality="0..1" targetCardinality="0..*" collectionType="List"/>
-    <ImplementsRelation name="&lt;&lt;implements&gt;&gt;" source="Auto" target="Automobile"/>
-    <ImplementsRelation name="&lt;&lt;implements&gt;&gt;" source="AutoSostituto" target="Automobile"/>
     <IsRelation name="is" source="Automobile" target="Runnable"/>
     <HasRelation name="Has" source="AutoSostituto" target="Pilota" type="Composition" sourceCardinality="0..1" targetCardinality="1..1"/>
-    <IsRelation name="is" source="Auto" target="Thread"/>
+    <HasRelation name="Has" source="Auto" target="Pilota" type="Composition" sourceCardinality="0..1" targetCardinality="1..1"/>
     <ImplementsRelation name="&lt;&lt;implements&gt;&gt;" source="Thread" target="Runnable"/>
   </ClassDiagramRelations>
 </ClassDiagram>

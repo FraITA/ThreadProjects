@@ -9,7 +9,7 @@ Classe Auto:
         
     Gli attributi vMin e vMax servono per determinare la velocità massima e minima 
     dell’auto in termini di millisecondi.
-        
+    
     L’attributo priorita serve per definire quale auto avrà la priorità sulle 
     altre (dato che sono thread), nel caso ci siano casi eccezionali come quello 
     di un incidente, dove davanti deve starci sempre la safety car.
@@ -85,6 +85,9 @@ Classe Tracciato:
 
         fineGara(): Quando termina la gara, questo metodo gestisce i thread (auto) ancora in running interrompendoli.
 			Il metodo è sincronizzato con il thread che lo chiama, permettendo il giusto ordine nella classifica.
+
+		truccaGara(): Metodo che permette di truccare un auto, dato il nome della 
+			scuderia della suddetta auto, facendola vincere.
         
 
 Interfaccia Automobile:
